@@ -45,8 +45,8 @@ extern "C" {
 #include "std_msgs/Float32.h"
 
 //pin literals
-#define hf_Left_adcPin 1
-#define hf_Right_adcPin 2
+#define hf_Right_adcPin 1
+#define hf_Left_adcPin 2
 
 
 //shuts down if ctrl^c
@@ -115,8 +115,8 @@ int main(int argc, char **argv) {
   ros::Publisher hfright_pwm_pub = dtt.advertise<std_msgs::Float32>("dtt/hfright_pwm", 1);
   ros::Publisher hfleft_ang_read = dtt.advertise<std_msgs::Float32>("dtt/hfleft_ang_read", 1);
   ros::Publisher hfright_ang_read = dtt.advertise<std_msgs::Float32>("dtt/hfright_ang_read", 1);
-  ros::Publisher hfleft_err = dtt.advertise<std_msgs::Float32>("dtt/hfleft_ang_read", 1);
-  ros::Publisher hfright_err = dtt.advertise<std_msgs::Float32>("dtt/hfright_ang_read", 1);
+  ros::Publisher hfleft_err = dtt.advertise<std_msgs::Float32>("dtt/hfleft_err", 1);
+  ros::Publisher hfright_err = dtt.advertise<std_msgs::Float32>("dtt/hfright_err", 1);
 
 
 
@@ -153,7 +153,7 @@ int main(int argc, char **argv) {
   //Foil alignment mechanical offsets per assembly
   float Offsetp = 0.00, Offsets = 0.00;
 
-  float servoPot_out_vmax = 1.154286; //maximum output of the servos : ~25% volts supplied to servos
+  float servoPot_out_vmax = 1.475; //maximum output of the servos : ~25% volts supplied to servos
 
   if(rc_adc_init()) {
 		ROS_INFO("ADC bus initialized\n");

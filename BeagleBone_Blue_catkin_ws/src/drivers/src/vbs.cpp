@@ -51,7 +51,7 @@ extern "C" {
 #include "std_msgs/Bool.h"
 
 //pin literals
-#define vbs_adcPin 2
+#define vbs_adcPin 3
 
 #define gpio_button_ChipNum 1
 #define button_Pin 25
@@ -66,7 +66,7 @@ void MySigintHandler(int sig) {
 //Respective node variables
 const float vbs_max_distance = 100; //millimeters, fixed limit
 const int sampleSize = 5;
-const float maxVolt = 1.154286;
+const float maxVolt = 1.475;
 
 int button_StateInit = -2; //inital value nonreturning from RCLibrary
 int adder = 0; //to modify desired distance if in P controller it is too close to either end of potentiometer
