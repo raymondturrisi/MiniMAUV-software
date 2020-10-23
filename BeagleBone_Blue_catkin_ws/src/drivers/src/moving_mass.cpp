@@ -44,8 +44,7 @@ extern "C" {
 
 #define mmPin 4
 //shuts down if ctrl^c
-void MySigintHandler(int sig)
-{
+void MySigintHandler(int sig) {
   ROS_INFO("Shutting down: moving mass");
   ros::shutdown();
   return;
@@ -87,7 +86,7 @@ int main(int argc, char **argv) {
   std_msgs::Float32 mm_pwm_pub;
   mm_pwm_pub.data = 1833.0;
 	mm_pub.publish(mm_pwm_pub);
-
+	float mm_pwm_f = 1833.0;
   while(ros::ok()) {
     //conversion for bottom angle
     mm_pwm = 2500.0 - 2000.0*(mm_ang/270.0);
@@ -96,7 +95,7 @@ int main(int argc, char **argv) {
     if(mm_pwm != mm_pwm_hold) {
 			//if desired pwm is less than current pwm, increase
 			if(mm_pwm < mm_pwm_hold) {
-		      for(float i = mm_pwm_hold; i <= mm_pwm; i+=3.2) {
+		      for(float i = mm_pwm_hold; i <= mm_pwm; i+=1) {
 		          mm_pwm_pub.data = i;
 		          mm_pub.publish(mm_pwm_pub);
 							ROS_INFO("PWM %f, ANG %f", i, mm_ang);
@@ -105,21 +104,24 @@ int main(int argc, char **argv) {
 						ros::Duration(0.1).sleep();
 		        ros::spinOnce();
 		      }
+					mm_pwm_f = mm_pwm;
 			}
 			//if desired pwm is greater than current pwm, decrease
 			if(mm_pwm > mm_pwm_hold) {
-		      for(float i = mm_pwm_hold; i >= mm_pwm; i-=3.2) {
+		      for(float i = mm_pwm_hold; i >= mm_pwm; i-=1) {
 		          mm_pwm_pub.data = i;
 		          mm_pub.publish(mm_pwm_pub);
+							ROS_INFO("PWM %f, ANG %f", i, mm_ang);
 		        //waits for 0.100 seconds
 		        //loop_rate.sleep();
 						ros::Duration(0.1).sleep();
 		        ros::spinOnce();
 		      }
+					mm_pwm_f = mm_pwm;
 			}
     }
     //finishes last call in loop and sends and holds battery in position
-    mm_pwm_pub.data = mm_pwm;
+    mm_pwm_pub.data = mm_pwm_f;
     mm_pub.publish(mm_pwm_pub);
 
     //passes to ros

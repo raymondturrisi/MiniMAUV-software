@@ -77,6 +77,20 @@ void hfrightCallback(const std_msgs::Float32::ConstPtr& msg) {
   hfright_ang = msg->data;
 }
 
+/////////////PID callbacks
+float pconst = 0.00, iconst = 0.00, dconst = 0.00;
+void pCallback(const std_msgs::Float32::ConstPtr& msg) {
+  pconst = msg->data;
+}
+
+void iCallback(const std_msgs::Float32::ConstPtr& msg) {
+  iconst = msg->data;
+}
+
+void dCallback(const std_msgs::Float32::ConstPtr& msg) {
+  dconst = msg->data;
+}
+
 int main(int argc, char **argv) {
 
   // initialize a ros node (name used in ros context)
@@ -87,9 +101,12 @@ int main(int argc, char **argv) {
   signal(SIGINT, MySigintHandler);
 
   //creates subscriber
-  ros::Subscriber hfleft_ang_sub = dtt.subscribe("dtt/hfleft_ang",1,hfleftCallback);
-  ros::Subscriber hfright_ang_sub = dtt.subscribe("dtt/hfright_ang",1,hfrightCallback);
+  ros::Subscriber hfleft_ang_sub = dtt.subscribe("dtt/hfleft_ang", 1, hfleftCallback);
+  ros::Subscriber hfright_ang_sub = dtt.subscribe("dtt/hfright_ang", 1, hfrightCallback);
 
+  ros::Subscriber pconst_sub = dtt.subscribe("dtt/pconst", 1, pCallback);
+  ros::Subscriber iconst_sub = dtt.subscribe("dtt/iconst", 1, iCallback);
+  ros::Subscriber dconst_sub = dtt.subscribe("dtt/dconst", 1, dCallback);
   //creates publisher
   //currently does not control motor pwm, 9/14/2020 rt
   //ros::Publisher escleft_pwm_pub = dtt.advertise<std_msgs::float32>("dtt/escleft_pwm", 1);
@@ -111,7 +128,7 @@ int main(int argc, char **argv) {
   float center = 1475.0000, potErrorScale = 1.0036496;
 
   //float pconst = 1.00, iconst = 2.50, dconst = 0.50, gainmax = 0.00; //kv = 880.0000
-  float pconst = 1.00, iconst = 1.0, dconst = 0.50, gainmax = 0.00;
+  float gainmax = 0.00;
   float angsp = 180, angss = 180; //, wp = 1500, ws = 1500; currently does not control motor pwm, 9/14/2020 rt
 
   float pwmp = 0.0000, angmp = 0.0000;
@@ -279,6 +296,7 @@ int main(int argc, char **argv) {
 
     ROS_INFO("DAng_L = %f, MAng_L = %f, Gain_L = %f, pwm_L = %f\n", angsp, angmp, gainp, pwmp);
     ROS_INFO("DAng_R = %f, MAng_R = %f, Gain_R = %f, pwm_R = %f\n", angss, angms, gains, pwms);
+    ROS_INFO("p = %f, i = %f, d = %f\n", pconst, iconst, dconst);
     //records current error for D computations
     eLastp = ep; eLasts = es;
     //passes to ros
