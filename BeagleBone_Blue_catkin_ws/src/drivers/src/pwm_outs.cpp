@@ -106,6 +106,14 @@ int main(int argc, char **argv) {
   ros::NodeHandle pwms;
   signal(SIGINT, MySigintHandler);
 
+	//creates subscribers
+  ros::Subscriber hf_Left_sub = pwms.subscribe("dtt/hfleft_pwm", 1,hfleftCallback);
+  ros::Subscriber hf_Right_sub = pwms.subscribe("dtt/hfright_pwm", 1,hfrightCallback);
+  ros::Subscriber vbs_sub = pwms.subscribe("vbs/vbs_pwm", 1,vbsCallback);
+  ros::Subscriber mm_sub = pwms.subscribe("mm/mm_pwm", 1,mmCallback);
+  ros::Subscriber esc_Left_sub = pwms.subscribe("dtt/escleft", 1,escleftCallback);
+  ros::Subscriber esc_Right_sub = pwms.subscribe("dtt/escright", 1,escrightCallback);
+
 	if(rc_servo_init()) {
 		ROS_INFO("Servo bus initialized\n");
 	} else {
@@ -116,13 +124,7 @@ int main(int argc, char **argv) {
 	} else {
 		ROS_INFO("ADC bus initialization failed\n");
 	}
-  //creates subscribers
-  ros::Subscriber hf_Left_sub = pwms.subscribe("dtt/hfleft_pwm", 1,hfleftCallback);
-  ros::Subscriber hf_Right_sub = pwms.subscribe("dtt/hfright_pwm", 1,hfrightCallback);
-  ros::Subscriber vbs_sub = pwms.subscribe("vbs/vbs_pwm", 1,vbsCallback);
-  ros::Subscriber mm_sub = pwms.subscribe("mm/mm_pwm", 1,mmCallback);
-  ros::Subscriber esc_Left_sub = pwms.subscribe("dtt/escleft", 1,escleftCallback);
-  ros::Subscriber esc_Right_sub = pwms.subscribe("dtt/escright", 1,escrightCallback);
+
 
   //50 hz, standard for servos and esc's
   ros::Rate loop_rate(50);
@@ -145,7 +147,7 @@ int main(int argc, char **argv) {
   	rc_servo_send_pulse_us(esc_Right_Pin,1500);
 
     ROS_INFO("- - Arming phase complete - - \r\n\n\n");
-    ros::Duration(1).sleep();
+    //ros::Duration(1).sleep();
     /*
 		ROS_INFO("- - Entering loop : 3 - - \r\n");
     ros::Duration(1).sleep();
@@ -153,7 +155,7 @@ int main(int argc, char **argv) {
     ros::Duration(1).sleep();
     ROS_INFO("- - Entering loop : 1 - - \r\n");
     ros::Duration(1).sleep();
-		*/
+	*/
 
   while(ros::ok()) {
 
