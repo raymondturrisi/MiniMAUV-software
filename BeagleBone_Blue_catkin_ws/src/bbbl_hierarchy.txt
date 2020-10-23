@@ -1,0 +1,40 @@
+BBBl ROS hierarchy
+/src
+	> readme_master.txt
+	> /Navigation
+		> /include
+		> /src
+			> mission
+			> MAUV_brain
+	> /Control
+		> /include
+		> /src	
+			> readme_control.txt 
+	
+			> MAUV_Heartbeat
+			> PWM Outs (and VBS button)
+			> DTT
+			> VBS
+			> Battery
+			> 0_ChangeMode
+			> 1H_Heading
+			> 2H_LongTurn_FromAngle
+			> 3H_SharpTurn_FromAngle
+			> 4H_LongDecsension
+			> 5H_Hover
+			> 6H_FollowPath
+			> 1V_DiveToDepth
+			> 2V_Heading
+			> 3V_Drift
+			> 4V_Hover
+			> 5V_FollowPath
+	> /Data
+		> /include
+		> /src
+			> readme_sensors.txt
+			> VISensor_1.1
+			> PTSensors
+			> imu_mpu
+			> filtering
+			> bagging
+	> CMakeList.txt

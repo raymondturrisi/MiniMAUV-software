@@ -1,0 +1,75 @@
+Topics & Messages
+/goal
+	/<float32> location
+/sensors
+	/<float32>epressure
+	/<float32>ipressure
+	/<float32>etemp
+	/<float32>itemp
+	/<float32>voltage1
+	/<float32>voltage2
+	/<float32>current
+/imus
+	/<float32>ahrs_ax
+	/<float32>ahrs_ay
+	/<float32>ahrs_az
+	/<float32>bbbl_ax
+	/<float32>bbbl_ay
+	/<float32>bbbl_az
+	/<float32>ahrs_wx
+	/<float32>ahrs_wy
+	/<float32>ahrs_wz
+	/<float32>bbbl_wx
+	/<float32>bbbl_wy
+	/<float32>bbbl_wz
+	/<float32>ahrs_ax
+	/<float32>ahrs_ay
+	/<float32>ahrs_az
+/data
+	/<float32>epressure
+	/<float32>ipressure
+	/<float32>etemp
+	/<float32>itemp
+	/<float32>voltage
+	/<float32>current
+	/<float32>power
+/commands
+	/<std::string>orientation
+	/<std::string>command
+/pose
+	/<float32>x
+	/<float32>y
+	/<float32>z
+	/<float32>r
+	/<float32>p
+	/<float32>y
+	/<float32>h
+	/<float32>desired_x
+	/<float32>desired_y
+	/<float32>desired_z
+	/<float32>desired_r
+	/<float32>desired_p
+	/<float32>desired_y
+	/<float32>desired_h
+
+/dtt
+	/<float32>escleft
+	/<float32>escright
+	/<float32>hfleft_pwm
+	/<float32>hfright_pwm
+	/<float32>hfleft_ang
+	/<float32>hfright_ang
+	/<float32>hfleft_ang_read
+	/<float32>hfright_ang_read
+	/<float32>hfleft_err
+	/<float32>hfright_err
+	
+/vbs
+	/<float32>vbs_desired_dist
+	/<float32>vbs_revs
+	/<float32>vbs_dist
+	/<float32>vbs_button_calibration
+/mm
+	/<float32>mm_ang
+/heartbeat
+	/<int32>beat
