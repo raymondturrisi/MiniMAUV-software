@@ -145,8 +145,8 @@ int main(int argc, char **argv) {
 
     rc_servo_send_pulse_us(esc_Left_Pin,1500);
   	rc_servo_send_pulse_us(esc_Right_Pin,1500);
+    //ROS_INFO("- - Arming phase complete - - \r\n\n\n");
 
-    ROS_INFO("- - Arming phase complete - - \r\n\n\n");
     //ros::Duration(1).sleep();
     /*
 		ROS_INFO("- - Entering loop : 3 - - \r\n");

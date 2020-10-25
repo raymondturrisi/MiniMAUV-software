@@ -95,27 +95,25 @@ int main(int argc, char **argv) {
     if(mm_pwm != mm_pwm_hold) {
 			//if desired pwm is less than current pwm, increase
 			if(mm_pwm < mm_pwm_hold) {
-		      for(float i = mm_pwm_hold; i <= mm_pwm; i+=1) {
+		      for(float i = mm_pwm_hold; i <= mm_pwm; i+=3.2) {
 		          mm_pwm_pub.data = i;
 		          mm_pub.publish(mm_pwm_pub);
-							ROS_INFO("PWM %f, ANG %f", i, mm_ang);
+							ROS_INFO("less than %i\n", i);
 		        //waits for 0.100 seconds
 		        //loop_rate.sleep();
-						ros::Duration(0.1).sleep();
-		        ros::spinOnce();
+						ros::Duration(0.5).sleep();
 		      }
 					mm_pwm_f = mm_pwm;
 			}
 			//if desired pwm is greater than current pwm, decrease
 			if(mm_pwm > mm_pwm_hold) {
-		      for(float i = mm_pwm_hold; i >= mm_pwm; i-=1) {
+		      for(float i = mm_pwm_hold; i >= mm_pwm; i-=3.2) {
 		          mm_pwm_pub.data = i;
 		          mm_pub.publish(mm_pwm_pub);
-							ROS_INFO("PWM %f, ANG %f", i, mm_ang);
+							ROS_INFO("greater than than %i\n", i);
 		        //waits for 0.100 seconds
 		        //loop_rate.sleep();
-						ros::Duration(0.1).sleep();
-		        ros::spinOnce();
+						ros::Duration(0.5).sleep();
 		      }
 					mm_pwm_f = mm_pwm;
 			}

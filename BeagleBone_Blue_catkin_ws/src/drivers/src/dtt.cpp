@@ -78,7 +78,7 @@ void hfrightCallback(const std_msgs::Float32::ConstPtr& msg) {
 }
 
 /////////////PID callbacks
-float pconst = 0.00, iconst = 0.00, dconst = 0.00;
+float pconst = 2.00, iconst = 0.30, dconst = 0.00;
 void pCallback(const std_msgs::Float32::ConstPtr& msg) {
   pconst = msg->data;
 }
