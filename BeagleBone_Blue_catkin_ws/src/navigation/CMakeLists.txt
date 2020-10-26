@@ -143,8 +143,8 @@ link_directories (
 #add_executable(path_planning src/path_planning.cpp)
 #target_link_libraries(path_planning roboticscape ${catkin_LIBRARIES})
 
-#add_executable(prototype_mission_1 src/prototype_mission_1.cpp)
-#target_link_libraries(prototype_mission_1 roboticscape ${catkin_LIBRARIES})
+add_executable(prototype_mission_1 src/prototype_mission_1.cpp)
+target_link_libraries(prototype_mission_1 roboticscape ${catkin_LIBRARIES})
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries

@@ -52,10 +52,11 @@ void MySigintHandler(int sig) {
 
 //Respective node variables
 float mm_ang = 90;
-
+bool moving = false;
 //Callback function which deposits subscription variables into respective node variables
 void mmCallback(const std_msgs::Float32::ConstPtr& msg) {
   mm_ang = msg->data;
+	moving = true;
 }
 
 int main(int argc, char **argv) {
@@ -92,41 +93,38 @@ int main(int argc, char **argv) {
     mm_pwm = 2500.0 - 2000.0*(mm_ang/270.0);
 		ROS_INFO("PWM %f, ANG %f", mm_pwm, mm_ang);
     //sends pwm for corresponding moving mass angle
-    if(mm_pwm != mm_pwm_hold) {
+    if(moving) {
 			//if desired pwm is less than current pwm, increase
-			if(mm_pwm < mm_pwm_hold) {
+			if(mm_pwm > mm_pwm_hold) {
 		      for(float i = mm_pwm_hold; i <= mm_pwm; i+=3.2) {
 		          mm_pwm_pub.data = i;
 		          mm_pub.publish(mm_pwm_pub);
-							ROS_INFO("less than %i\n", i);
+							//ROS_INFO("less than %f\n", i);
 		        //waits for 0.100 seconds
 		        //loop_rate.sleep();
-						ros::Duration(0.5).sleep();
+						ros::Duration(0.05).sleep();
 		      }
 					mm_pwm_f = mm_pwm;
 			}
 			//if desired pwm is greater than current pwm, decrease
-			if(mm_pwm > mm_pwm_hold) {
+			if(mm_pwm < mm_pwm_hold) {
 		      for(float i = mm_pwm_hold; i >= mm_pwm; i-=3.2) {
 		          mm_pwm_pub.data = i;
 		          mm_pub.publish(mm_pwm_pub);
-							ROS_INFO("greater than than %i\n", i);
+							//ROS_INFO("greater than than %f\n", i);
 		        //waits for 0.100 seconds
 		        //loop_rate.sleep();
-						ros::Duration(0.5).sleep();
+						ros::Duration(0.05).sleep();
 		      }
 					mm_pwm_f = mm_pwm;
 			}
+			moving = false;
     }
     //finishes last call in loop and sends and holds battery in position
     mm_pwm_pub.data = mm_pwm_f;
     mm_pub.publish(mm_pwm_pub);
-
     //passes to ros
     ros::spinOnce();
-    //sleeps for 100 milliseconds
-    ros::Duration(0.1).sleep();
-
     //saves last value
     mm_pwm_hold = mm_pwm;
   }

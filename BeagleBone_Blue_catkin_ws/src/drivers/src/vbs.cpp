@@ -23,8 +23,9 @@
 * 	9/14/2020: Adopted rudementary vbs code controlling angular velocity and
 *            implemented std filter from dtt | rt
 *   10/2/2020: Rewrote entire code to fit needs of MiniMAUV control| rt
+*   10/25/2020: All parts of code working
 * Need to:
-*       - test code
+*
 *
 */
 
@@ -64,9 +65,10 @@ void MySigintHandler(int sig) {
 }
 
 //Respective node variables
-const float vbs_max_distance = 100; //millimeters, fixed limit
-const int sampleSize = 5;
-const float maxVolt = 1.475;
+const float vbs_max_distance = 90; //millimeters, fixed limit
+const float vbs_min_distance = 10;
+const int sampleSize = 3;
+const float maxVolt = 1.6815;
 
 int button_StateInit = -2; //inital value nonreturning from RCLibrary
 int adder = 0; //to modify desired distance if in P controller it is too close to either end of potentiometer
@@ -74,9 +76,9 @@ float adcMean = 0; //averaged readings over (sampleSize) samples
 float err = 0.00; //err for P controller
 
 //float gearRatio = 1.4 mm/rev;
-float gearRatio = .46;
-float vbs_desired_dist = 50; //millimeters, sub'd
-float vbs_olddesired_dist = 50; //millimeters, sub'd
+float gearRatio = 1.07;
+float vbs_desired_dist = 20; //millimeters, sub'd
+float vbs_olddesired_dist = 20; //millimeters, sub'd
 float vbs_current_dist = 10; //millimeters, pub'd
 bool vbs_calibrated = false; //pub'd and sub'd
 float vbs_revs = 0; //local
@@ -138,7 +140,7 @@ int main(int argc, char **argv) {
         button_StateInit = rc_gpio_get_value(gpio_button_ChipNum,button_Pin);
         //while rosok && not calibrated
         while(ros::ok() && !vbs_calibrated) {
-          ROS_INFO("CDist: %f, DDist: %f, ODDist: %f, Revs: %f, F: %i \n", vbs_current_dist, vbs_desired_dist, vbs_olddesired_dist, vbs_revs, (int)flagged);
+          ROS_INFO("calibrating.. \n");
           //vbs pwm out = 1475-w;
           pwm_msg.data = 1415;
           vbs_pwm_pub.publish(pwm_msg);
@@ -170,6 +172,11 @@ int main(int argc, char **argv) {
         while(ros::ok() && vbs_calibrated) {
           ROS_INFO("CDist: %f, DDist: %f, ODDist: %f, Revs: %f, F: %i , err: %f, gain: %f, adcMean: %f\n", vbs_current_dist, vbs_desired_dist, vbs_olddesired_dist, vbs_revs, (int)flagged, err, gain, adcMean);
 
+          //catch: if button is mistakingly pressed, resets distance
+          button_State = rc_gpio_get_value(gpio_button_ChipNum,button_Pin);
+          if(button_State != button_StateInit) {
+            vbs_revs = 0;
+          }
           //if current desired distance != old desired distance
             //adder = 0;
           if(vbs_desired_dist != vbs_olddesired_dist) {
@@ -177,15 +184,20 @@ int main(int argc, char **argv) {
           }
           //if desired dist is greater than max distance
             //publish to desired distance "max distance"
-          if(vbs_desired_dist >= vbs_max_distance) {
+          if(vbs_desired_dist > vbs_max_distance) {
             vbs_desired_dist = vbs_max_distance;
-            ROS_INFO("vbs: desired distance greater than max distance");
+            ROS_INFO("vbs: desired distance greater than max distance, over riding");
+          }
+
+          if(vbs_desired_dist < vbs_min_distance) {
+            vbs_desired_dist = vbs_min_distance;
+            ROS_INFO("vbs: desired distance less than min distance, over riding");
           }
 
           //reads adc with minimal filtering, currently using mean of five readings
           for(int i = 0; i < sampleSize; i++) {
-            adcMean+= rc_adc_read_volt(2)/maxVolt;
-            ros::Duration(0.010/((float)sampleSize)).sleep(); //takes max of 10 milliseconds of the 20 millisecond total program runtime
+            adcMean+= rc_adc_read_volt(vbs_adcPin)/maxVolt;
+            ros::Duration(0.005/((float)sampleSize)).sleep(); //takes max of 5 milliseconds of the 20 millisecond total program runtime
           }
           adcMean/=sampleSize; //averaged readings over 10 ms, returning percentage of full rotation
           //calculates error, desired dist - current dist + adder
@@ -193,39 +205,39 @@ int main(int argc, char **argv) {
           //if(err is positive && adc is greater than 95 percent && not flagged)
             //revs++
             //flagged
-          if(err >= 0 && adcMean >=0.95 && !flagged) {
+          if(err >= 0 && adcMean >= 0.9 && !flagged) {
             vbs_revs++;
             flagged = true;
           }
           //if(err is negative && adc is less than 5 percent && not flagged)
             //revs--
             //flagged
-          if(err <= 0 && adcMean <= 0.05 && !flagged) {
+          if(err < 0 && adcMean <= 0.4 && !flagged) {
             vbs_revs--;
             flagged = true;
           }
           //if(flagged && adc > 5 percent && adc < 95 percent)
             //unflag
-          if(flagged && adcMean >0.05 && adcMean < 0.95) {
+          if(flagged && adcMean > 0.4 && adcMean < 0.9) {
             flagged = !flagged;
           }
           //if(err is less than threshold && adc < 10 percent && adc > 90 percent)
             //use local adder variable above or below the desired distance to get way from bounds of potentiometer
               //if err is positive, adder = positive threshold
               //if err is negative, adder = negative threshold
-          if(err < threshold && adcMean < 0.1 && adcMean > 0.9) {
+          if(err < threshold && (adcMean < 0.4 || adcMean > 0.9)) {
             if(err > 0) adder = threshold;
             if(err <= 0) adder = -threshold;
           }
 
           gain = pconst*(err+adder);
           //PWM out = 1475 + gain * (err+adder)
-          if(gain >= 200) {
-            gain = 200;
+          if(gain >= 100) {
+            gain = 100;
           }
 
-          if(gain <= -200) {
-            gain = -200;
+          if(gain <= -100) {
+            gain = -100;
           }
 
           vbs_residual_rev = adcMean;
@@ -247,7 +259,7 @@ int main(int argc, char **argv) {
           loop_rate.sleep();
         //end while
         }
+        ros::spinOnce();
       }
-    ros::spinOnce();
     return 0;
   }
