@@ -149,6 +149,9 @@ target_link_libraries(pwm_outs roboticscape ${catkin_LIBRARIES})
 add_executable(heartbeat src/mauv_heartbeat.cpp)
 target_link_libraries(heartbeat roboticscape ${catkin_LIBRARIES})
 
+add_executable(leaksensors src/leaksensors.cpp)
+target_link_libraries(leaksensors roboticscape ${catkin_LIBRARIES})
+
 add_executable(moving_mass src/moving_mass.cpp)
 target_link_libraries(moving_mass roboticscape ${catkin_LIBRARIES})
 
