@@ -146,6 +146,27 @@ link_directories (
 add_executable(prototype_mission_1 src/prototype_mission_1.cpp)
 target_link_libraries(prototype_mission_1 roboticscape ${catkin_LIBRARIES})
 
+add_executable(prototype_mission_2 src/prototype_mission_2.cpp)
+target_link_libraries(prototype_mission_2 roboticscape ${catkin_LIBRARIES})
+
+add_executable(prototype_mission_3 src/prototype_mission_3.cpp)
+target_link_libraries(prototype_mission_3 roboticscape ${catkin_LIBRARIES})
+
+add_executable(prototype_mission_4_1 src/prototype_mission_4_1.cpp)
+target_link_libraries(prototype_mission_4_1 roboticscape ${catkin_LIBRARIES})
+
+add_executable(prototype_mission_4_2 src/prototype_mission_4_2.cpp)
+target_link_libraries(prototype_mission_4_2 roboticscape ${catkin_LIBRARIES})
+
+add_executable(prototype_mission_4_3 src/prototype_mission_4_3.cpp)
+target_link_libraries(prototype_mission_4_3 roboticscape ${catkin_LIBRARIES})
+
+add_executable(prototype_mission_5 src/prototype_mission_5.cpp)
+target_link_libraries(prototype_mission_5 roboticscape ${catkin_LIBRARIES})
+
+add_executable(prototype_mission_6 src/prototype_mission_6.cpp)
+target_link_libraries(prototype_mission_6 roboticscape ${catkin_LIBRARIES})
+
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
