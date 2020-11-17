@@ -112,7 +112,7 @@ int main(int argc, char **argv) {
     vbs_desired_dist.data = 50;
     mm_ang.data = 90;
 
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < 60; i++) {
       if(leaking) {
         break;
       }
