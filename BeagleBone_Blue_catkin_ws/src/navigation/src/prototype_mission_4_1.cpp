@@ -149,11 +149,11 @@ int main(int argc, char **argv) {
       ros::Duration(1).sleep();
     }
 
-    //2a) Cruise at 1510 PWM for 10 seconds >> for ~~
+    //2a) Cruise at 1540 PWM for 10 seconds >> for ~~
     hfleft_ang.data = 180;
     hfright_ang.data = 180;
-    escleft.data = 1510;
-    escright.data = 1510;
+    escleft.data = 1540;
+    escright.data = 1540;
     vbs_desired_dist.data = 50;
     mm_ang.data = 90;
 
@@ -172,11 +172,11 @@ int main(int argc, char **argv) {
       ros::Duration(1).sleep();
     }
 
-    //2b) Cruise at 1520 PWM for 10 seconds >> for ~~
+    //2b) Cruise at 1560 PWM for 10 seconds >> for ~~
     hfleft_ang.data = 180;
     hfright_ang.data = 180;
-    escleft.data = 1520;
-    escright.data = 1520;
+    escleft.data = 1560;
+    escright.data = 1560;
     vbs_desired_dist.data = 50;
     mm_ang.data = 90;
 
@@ -204,9 +204,6 @@ int main(int argc, char **argv) {
     mm_ang.data = 90;
 
     for(int i = 0; i < 10; i++) {
-      if(leaking) {
-        break;
-      }
       ROS_INFO("exit) i %i\n", i);
       hfleft_ang_pub.publish(hfleft_ang);
       hfright_ang_pub.publish(hfright_ang);

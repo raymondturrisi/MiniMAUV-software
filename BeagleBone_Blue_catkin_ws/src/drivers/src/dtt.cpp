@@ -115,8 +115,8 @@ int main(int argc, char **argv) {
   ros::Publisher hfright_pwm_pub = dtt.advertise<std_msgs::Float32>("dtt/hfright_pwm", 1);
   ros::Publisher hfleft_ang_read = dtt.advertise<std_msgs::Float32>("dtt/hfleft_ang_read", 1);
   ros::Publisher hfright_ang_read = dtt.advertise<std_msgs::Float32>("dtt/hfright_ang_read", 1);
-  ros::Publisher hfleft_err = dtt.advertise<std_msgs::Float32>("dtt/hfleft_err", 1);
-  ros::Publisher hfright_err = dtt.advertise<std_msgs::Float32>("dtt/hfright_err", 1);
+  //ros::Publisher hfleft_err = dtt.advertise<std_msgs::Float32>("dtt/hfleft_err", 1);
+  //ros::Publisher hfright_err = dtt.advertise<std_msgs::Float32>("dtt/hfright_err", 1);
 
 
 
@@ -291,12 +291,12 @@ int main(int argc, char **argv) {
     hfright_pwm_pub.publish(pwms_msg);
     hfleft_ang_read.publish(angmp_msg);
     hfright_ang_read.publish(angms_msg);
-    hfleft_err.publish(ep_msg);
-    hfright_err.publish(es_msg);
+    //hfleft_err.publish(ep_msg);
+    //hfright_err.publish(es_msg);
 
-    ROS_INFO("DAng_L = %f, MAng_L = %f, Gain_L = %f, pwm_L = %f\n", angsp, angmp, gainp, pwmp);
-    ROS_INFO("DAng_R = %f, MAng_R = %f, Gain_R = %f, pwm_R = %f\n", angss, angms, gains, pwms);
-    ROS_INFO("p = %f, i = %f, d = %f\n", pconst, iconst, dconst);
+    //ROS_INFO("DAng_L = %f, MAng_L = %f, Gain_L = %f, pwm_L = %f\n", angsp, angmp, gainp, pwmp);
+    //ROS_INFO("DAng_R = %f, MAng_R = %f, Gain_R = %f, pwm_R = %f\n", angss, angms, gains, pwms);
+    //ROS_INFO("p = %f, i = %f, d = %f\n", pconst, iconst, dconst);
     //records current error for D computations
     eLastp = ep; eLasts = es;
     //passes to ros

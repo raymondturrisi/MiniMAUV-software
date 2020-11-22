@@ -166,9 +166,9 @@ int main(int argc, char **argv) {
   	rc_servo_send_pulse_us(mm_Pin,mm_pwm);
   	rc_servo_send_pulse_us(esc_Left_Pin,escLeft_pwm);
   	rc_servo_send_pulse_us(esc_Right_Pin,escRight_pwm);
-		ROS_INFO("hfLeft: %f, hfRight: %f, escLeft: %f, esc_Right: %f\n", hfLeft_pwm, hfRight_pwm, escLeft_pwm, escRight_pwm);
-		ROS_INFO("vbs: %f, mm: %f\n", vbs_pwm, mm_pwm);
-		ROS_INFO("battery: %f\n", rc_adc_dc_jack());
+		//ROS_INFO("hfLeft: %f, hfRight: %f, escLeft: %f, esc_Right: %f\n", hfLeft_pwm, hfRight_pwm, escLeft_pwm, escRight_pwm);
+		//ROS_INFO("vbs: %f, mm: %f\n", vbs_pwm, mm_pwm);
+		//ROS_INFO("battery: %f\n", rc_adc_dc_jack());
     //passes to ros
     ros::spinOnce();
 

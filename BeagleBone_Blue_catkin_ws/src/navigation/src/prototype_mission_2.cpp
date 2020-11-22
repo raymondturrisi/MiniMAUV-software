@@ -105,6 +105,28 @@ int main(int argc, char **argv) {
 
     ROS_INFO("Starting\n");
 
+
+    //1a) Get into vertical diving configuration
+    hfleft_ang.data = 180;
+    hfright_ang.data = 180;
+    escleft.data = 1500;
+    escright.data = 1500;
+    vbs_desired_dist.data = 10;
+    mm_ang.data = 270;
+
+    while((std::abs(vbs_desired_dist.data - vbs_cdist) > 5) && !leaking) {
+      ROS_INFO("1a) dist err %f\n", std::abs(vbs_desired_dist.data - vbs_cdist));
+      hfleft_ang_pub.publish(hfleft_ang);
+      hfright_ang_pub.publish(hfright_ang);
+      escleft_pub.publish(escleft);
+      escright_pub.publish(escright);
+      vbs_desired_dist_pub.publish(vbs_desired_dist);
+      mm_ang_pub.publish(mm_ang);
+      ros::spinOnce();
+      ros::Duration(0.5).sleep();
+    }
+
+
     //Hold in vertical diving configuration for 60 seconds >> for ~~
     hfleft_ang.data = 180;
     hfright_ang.data = 180;

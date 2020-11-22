@@ -117,8 +117,8 @@ int main(int argc, char **argv) {
     escright.data = 1500;
     vbs_desired_dist.data = 20;
     mm_ang.data = 90;
-    vbs_calibrated_pub_msg.data = false;
-    vbs_calibrated_pub.publish(vbs_calibrated_pub_msg);
+    //vbs_calibrated_pub_msg.data = false;
+    //vbs_calibrated_pub.publish(vbs_calibrated_pub_msg);
 
 
     while(!vbs_calibrated && !leaking) {
@@ -243,7 +243,7 @@ int main(int argc, char **argv) {
     hfright_ang.data = 180;
     escleft.data = 1500;
     escright.data = 1500;
-    vbs_desired_dist.data = 90;
+    vbs_desired_dist.data = 80;
     mm_ang.data = 90;
 
     while(std::abs(vbs_desired_dist.data - vbs_cdist) > 5) {

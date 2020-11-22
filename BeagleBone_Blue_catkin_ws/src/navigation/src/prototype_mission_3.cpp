@@ -220,10 +220,27 @@ int main(int argc, char **argv) {
     mm_ang.data = 90;
 
     for(int i = 0; i < 10; i++) {
-      if(leaking) {
-        break;
-      }
       ROS_INFO("3b) i %i\n", i);
+      hfleft_ang_pub.publish(hfleft_ang);
+      hfright_ang_pub.publish(hfright_ang);
+      escleft_pub.publish(escleft);
+      escright_pub.publish(escright);
+      vbs_desired_dist_pub.publish(vbs_desired_dist);
+      mm_ang_pub.publish(mm_ang);
+      ros::spinOnce();
+      ros::Duration(1).sleep();
+    }
+
+    //4) Reset all actuators for 5 seconds >> for ~~
+    hfleft_ang.data = 180;
+    hfright_ang.data = 180;
+    escleft.data = 1500;
+    escright.data = 1500;
+    vbs_desired_dist.data = 80;
+    mm_ang.data = 90;
+
+    for(int i = 0; i < 10; i++) {
+      ROS_INFO("exit) i %i\n", i);
       hfleft_ang_pub.publish(hfleft_ang);
       hfright_ang_pub.publish(hfright_ang);
       escleft_pub.publish(escleft);

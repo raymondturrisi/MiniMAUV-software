@@ -91,7 +91,7 @@ int main(int argc, char **argv) {
   while(ros::ok()) {
     //conversion for bottom angle
     mm_pwm = 2500.0 - 2000.0*(mm_ang/270.0);
-		ROS_INFO("PWM %f, ANG %f", mm_pwm, mm_ang);
+		//ROS_INFO("PWM %f, ANG %f", mm_pwm, mm_ang);
     //sends pwm for corresponding moving mass angle
     if(moving) {
 			//if desired pwm is less than current pwm, increase

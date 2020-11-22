@@ -78,7 +78,7 @@ int main(int argc, char **argv) {
     } else {
       leaking.data = false;
     }
-    ROS_INFO("leaking: %i", leaking_sensor);
+    //ROS_INFO("leaking: %i", leaking_sensor);
     ls_pub.publish(leaking);
     //passes to ros
     ros::spinOnce();

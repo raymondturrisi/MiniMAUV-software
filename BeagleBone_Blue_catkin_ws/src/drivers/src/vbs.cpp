@@ -170,7 +170,7 @@ int main(int argc, char **argv) {
 
         //while ros ok and calibrated
         while(ros::ok() && vbs_calibrated) {
-          ROS_INFO("CDist: %f, DDist: %f, ODDist: %f, Revs: %f, F: %i , err: %f, gain: %f, adcMean: %f\n", vbs_current_dist, vbs_desired_dist, vbs_olddesired_dist, vbs_revs, (int)flagged, err, gain, adcMean);
+          //ROS_INFO("CDist: %f, DDist: %f, ODDist: %f, Revs: %f, F: %i , err: %f, gain: %f, adcMean: %f\n", vbs_current_dist, vbs_desired_dist, vbs_olddesired_dist, vbs_revs, (int)flagged, err, gain, adcMean);
 
           //catch: if button is mistakingly pressed, resets distance
           button_State = rc_gpio_get_value(gpio_button_ChipNum,button_Pin);
@@ -186,12 +186,12 @@ int main(int argc, char **argv) {
             //publish to desired distance "max distance"
           if(vbs_desired_dist > vbs_max_distance) {
             vbs_desired_dist = vbs_max_distance;
-            ROS_INFO("vbs: desired distance greater than max distance, over riding");
+            ROS_INFO("vbs: desired distance greater than max distance, overriding");
           }
 
           if(vbs_desired_dist < vbs_min_distance) {
             vbs_desired_dist = vbs_min_distance;
-            ROS_INFO("vbs: desired distance less than min distance, over riding");
+            ROS_INFO("vbs: desired distance less than min distance, overriding");
           }
 
           //reads adc with minimal filtering, currently using mean of five readings

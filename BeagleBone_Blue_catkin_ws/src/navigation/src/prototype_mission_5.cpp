@@ -386,9 +386,6 @@ int main(int argc, char **argv) {
     mm_ang.data = 90;
 
     for(int i = 0; i < 10; i++) {
-      if(leaking) {
-        break;
-      }
       ROS_INFO("exit) i %i\n", i);
       hfleft_ang_pub.publish(hfleft_ang);
       hfright_ang_pub.publish(hfright_ang);
