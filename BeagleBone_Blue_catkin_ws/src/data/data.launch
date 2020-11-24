@@ -1,0 +1,6 @@
+<launch>
+  ##Launches all the drivers
+  <node pkg = "data" type = "pt_sensors" name = "pt_sensors" />
+  <node pkg = "data" type = "imu_mpu" name = "imu_mpu" />
+  <include file="$(find microstrain_mips)/launch/microstrain.launch" />
+</launch>

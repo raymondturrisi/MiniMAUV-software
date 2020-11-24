@@ -1,0 +1,8 @@
+<launch>
+  ##Launches all the drivers
+  <node pkg = "drivers" type = "heartbeat" name = "heartbeat" />
+  <node pkg = "drivers" type = "dtt" name = "dtt" />
+  <node pkg = "drivers" type = "vbs" name = "vbs" />
+  <node pkg = "drivers" type = "moving_mass" name = "moving_mass" />
+  <node pkg = "drivers" type = "leaksensors" name = "leaksensors" />
+</launch>

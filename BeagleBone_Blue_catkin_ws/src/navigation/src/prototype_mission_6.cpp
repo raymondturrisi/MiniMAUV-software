@@ -63,7 +63,7 @@ void beatCallback(const std_msgs::Float32::ConstPtr& msg) {
   beat = msg->data;
 }
 
-void leakingCallback(const std_msgs::Float32::ConstPtr& msg) {
+void leakingCallback(const std_msgs::Bool::ConstPtr& msg) {
   leaking = msg->data;
 }
 
@@ -117,8 +117,8 @@ int main(int argc, char **argv) {
     escright.data = 1500;
     vbs_desired_dist.data = 20;
     mm_ang.data = 90;
-    //vbs_calibrated_pub_msg.data = false;
-    //vbs_calibrated_pub.publish(vbs_calibrated_pub_msg);
+    vbs_calibrated_pub_msg.data = false;
+    vbs_calibrated_pub.publish(vbs_calibrated_pub_msg);
 
 
     while(!vbs_calibrated && !leaking) {

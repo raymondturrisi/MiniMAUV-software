@@ -57,7 +57,7 @@ void vbs_calibratedCallback(const std_msgs::Bool::ConstPtr& msg) {
 void beatCallback(const std_msgs::Float32::ConstPtr& msg) {
   beat = msg->data;
 }
-void leakingCallback(const std_msgs::Float32::ConstPtr& msg) {
+void leakingCallback(const std_msgs::Bool::ConstPtr& msg) {
   leaking = msg->data;
 }
 

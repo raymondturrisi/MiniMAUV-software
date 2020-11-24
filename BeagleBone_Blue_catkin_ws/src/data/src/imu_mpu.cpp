@@ -83,7 +83,7 @@ public:
     //if ctrl-c we shut down things
     signal(SIGINT, MySigintHandler);
     running = 1;
-    ROS_INFO("Node started");
+    //ROS_INFO("Node started");
 
   }
 

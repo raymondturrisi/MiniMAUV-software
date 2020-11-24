@@ -1,9 +1,0 @@
-<launch>
-  ##Launches all the drivers
-  <node pkg = "drivers" type = "mauv_heartbeat" launch-prefix = "echo $'launching::mauv_heartbeat'" />
-  <node pkg = "drivers" type = "pwm_outs" launch-prefix = "echo $'launching::pwm_outs \nlaunching::dtt'" />
-  <node pkg = "drivers" type = "dtt" launch-prefix = "bash -c 'sleep 5'" />
-  <node pkg = "drivers" type = "vbs" launch-prefix = "echo $'launching::vbs'" />
-  <node pkg = "drivers" type = "moving_mass" launch-prefix = "echo $'launching::moving_mass'" />
-  <node pkg = "drivers" type = "leaksensors" launch-prefix = "echo $'launching::leaksensors'" />
-</launch>
