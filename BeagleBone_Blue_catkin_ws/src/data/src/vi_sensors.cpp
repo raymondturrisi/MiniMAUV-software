@@ -34,8 +34,9 @@ extern "C" {
   #include <stdlib.h>  // for atoi() and exit()
   #include <rc/i2c.h>
   #include <rc/time.h>
+  #include "rc/adc.h"
 }
-#include <std_msgs/Float64.h>
+#include <std_msgs/Float32.h>
 
 //i2c registers for adafruits cv sensor
 #define INA260_I2CADDR_DEFAULT  0x40  ///< INA260 default i2c address
@@ -65,7 +66,7 @@ int main(int argc, char** argv)
   signal(SIGINT, MySigintHandler);
   // create a Publisher and publish a string topic named heading
   ros::Publisher voltage1_pub = vi.advertise<std_msgs::Float32>("sensors/voltage1", 2);
-  ros::Publisher current1_pub = vi.advertise<std_msgs::Float32>("sensors/current1", 2);
+  ros::Publisher current_pub = vi.advertise<std_msgs::Float32>("sensors/current1", 2);
   ros::Publisher voltage2_pub = vi.advertise<std_msgs::Float32>("sensors/voltage2", 2);
   // set the frequency. It should be conbined with spinOnce().
   ros::Rate loop_rate(10);
@@ -76,7 +77,7 @@ int main(int argc, char** argv)
   rc_adc_init();
 
   //declares messages and variables
-  std_msgs::Float64 voltage1, voltage2, current;
+  std_msgs::Float32 voltage1, voltage2, current;
   uint8_t cu[2], vo[2];
 
   while (ros::ok()) {
@@ -90,15 +91,15 @@ int main(int argc, char** argv)
 
     //converts i2c readings
     voltage1.data = 1.25*int((vo[0]<<8)|(vo[1]))/1000; //combine the high bits and the low bits;
-    current1.data = 1.25*int((cu[0]<<8)|(cu[1]))/1000;
+    current.data = 1.25*int((cu[0]<<8)|(cu[1]))/1000;
 
     //ROS_INFO("voltage1:%f\n", voltage1.data);
-    //ROS_INFO("current1:%f\n", current1.data);
+    //ROS_INFO("current:%f\n", current.data);
 
     //publishes data
     voltage1_pub.publish(voltage1);
     voltage2_pub.publish(voltage2);
-    current1_pub.publish(current1);
+    current_pub.publish(current);
     //passes to ros
     ros::spinOnce();
 

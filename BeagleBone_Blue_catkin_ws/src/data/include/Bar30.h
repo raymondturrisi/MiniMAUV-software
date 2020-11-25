@@ -18,7 +18,6 @@ copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 The above copyright notice and this permission notice shall be included in
 all copies or substantial portions of the Software.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -40,14 +39,22 @@ public:
 	static constexpr float Pa = 100.0f;
 	static constexpr float bar = 0.001f;
 	static constexpr float mbar = 1.0f;
+	static const uint8_t MS5837_30BA = 0;
+	static const uint8_t MS5837_02BA = 1;
 
 	MS5837();
 
 	void init();
 
+	/** Set model of MS5837 sensor. Valid options are MS5837::MS5837_30BA (default)
+	 * and MS5837::MS5837_02BA.
+	 */
+	void setModel(uint8_t model);
+
 	/** Provide the density of the working fluid in kg/m^3. Default is for
 	 * seawater. Should be 997 for freshwater.
 	 */
+
 	void setFluidDensity(float density);
 
 	/** The read from I2C takes up for 40 ms, so use sparingly is possible.
@@ -82,6 +89,7 @@ private:
 	uint32_t D1, D2;
 	int32_t TEMP;
 	int32_t P;
+	uint8_t _model;
 
 	float fluidDensity;
 
