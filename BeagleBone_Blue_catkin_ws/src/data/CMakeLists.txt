@@ -63,8 +63,8 @@ target_link_libraries(pt_sensors roboticscape ${catkin_LIBRARIES})
 add_executable(imu_mpu src/imu_mpu.cpp)
 target_link_libraries(imu_mpu roboticscape ${catkin_LIBRARIES})
 
-#add_executable(vi_sensors src/vi_sensors.cpp)
-#target_link_libraries(vi_sensors roboticscape ${catkin_LIBRARIES})
+add_executable(vi_sensors src/vi_sensors.cpp)
+target_link_libraries(vi_sensors roboticscape ${catkin_LIBRARIES})
 
 #add_executable(filtering src/filtering.cpp)
 #target_link_libraries(filtering roboticscape ${catkin_LIBRARIES})
