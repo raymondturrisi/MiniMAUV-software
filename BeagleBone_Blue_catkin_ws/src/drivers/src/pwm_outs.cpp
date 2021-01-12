@@ -114,15 +114,24 @@ int main(int argc, char **argv) {
   ros::Subscriber esc_Left_sub = pwms.subscribe("dtt/escleft", 1,escleftCallback);
   ros::Subscriber esc_Right_sub = pwms.subscribe("dtt/escright", 1,escrightCallback);
 
+
 	if(rc_servo_init()) {
 		ROS_INFO("Servo bus initialized\n");
 	} else {
 		ROS_INFO("Servo bus initialization failed\n");
+		rc_servo_cleanup();
+		if(rc_servo_init()) {
+			ROS_INFO("Servo initiated on second attempt..\n");
+		}
 	}
 	if(rc_adc_init()) {
 		ROS_INFO("ADC bus initialized\n");
 	} else {
 		ROS_INFO("ADC bus initialization failed\n");
+		rc_adc_cleanup();
+		if(rc_servo_init()) {
+			ROS_INFO("ADC bus initiated on second attempt..\n");
+		}
 	}
 
 
