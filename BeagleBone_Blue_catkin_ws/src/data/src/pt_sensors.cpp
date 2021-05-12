@@ -36,7 +36,7 @@ extern "C"  // required when building C code
   #include <rc/time.h>
   #include <rc/bmp.h>
 }
-#include <std_msgs/Float64.h>
+#include <std_msgs/Float32.h>
 #include "Bar30.h"
 
 //********Definitions used in rc_test_bmp.c
@@ -51,8 +51,9 @@ extern "C"  // required when building C code
 #define CUTOFF_FREQ     2.0f    // 2rad/s, about 0.3hz
 #define BMP_CHECK_HZ    25
 #define DT              1.0f/BMP_CHECK_HZ
-
-
+uint8_t MS5837_30BA = 0;
+uint8_t MS5837_02BA = 1;
+uint8_t model = MS5837_02BA;
 
 void MySigintHandler(int sig)
 {
@@ -96,19 +97,20 @@ int main(int argc, char** argv) {
   //signal(SIGINT, MySigintHandler);
 
   sensor.init();
+  sensor.setModel(model);
   sensor.setFluidDensity(freshwater); // kg/m^3 (freshwater, seawater)
 
   //Creates publishers
-  ros::Publisher epressure_pub = pt_sensors.advertise<std_msgs::Float64>("sensors/epressure", 2);
-  ros::Publisher etemperature_pub = pt_sensors.advertise<std_msgs::Float64>("sensors/etemperature", 2);
-  ros::Publisher ipressure_pub = pt_sensors.advertise<std_msgs::Float64>("sensors/ipressure", 2);
-  ros::Publisher itemperature_pub = pt_sensors.advertise<std_msgs::Float64>("sensors/itemperature", 2);
+  ros::Publisher epressure_pub = pt_sensors.advertise<std_msgs::Float32>("sensors/epressure", 2);
+  ros::Publisher etemperature_pub = pt_sensors.advertise<std_msgs::Float32>("sensors/etemperature", 2);
+  ros::Publisher ipressure_pub = pt_sensors.advertise<std_msgs::Float32>("sensors/ipressure", 2);
+  ros::Publisher itemperature_pub = pt_sensors.advertise<std_msgs::Float32>("sensors/itemperature", 2);
 
   // set the frequency. It should be conbined with spinOnce(). 25 Hz for BMP on BBBl
   ros::Rate loop_rate(25);
 
-  //std_msgs::Float64 voltage, current,power;
-  std_msgs::Float64 epressure, etemperature, ipressure, itemperature;
+  //std_msgs::Float32 voltage, current,power;
+  std_msgs::Float32 epressure, etemperature, ipressure, itemperature;
 
   while (ros::ok()) {
 
@@ -117,7 +119,7 @@ int main(int argc, char** argv) {
 
     //See include/bar30.h and bar30.cpp for more details (reads pressure AND temperature of bar30)
     sensor.read_pressure();
-    epressure.data = sensor.pressure(1.00f);
+    epressure.data = sensor.pressure(100.0f); //conversion for Pa
     etemperature.data = sensor.temperature();
 
     //Reads internal pressure and temperature, if bad read, uses last read [returns 0 on good read, -1 on bad read]
@@ -125,8 +127,8 @@ int main(int argc, char** argv) {
       data = data_last;
     }
 
-    ipressure.data = data.temp_c;
-    itemperature.data = data.pressure_pa/1000;
+    ipressure.data = data.pressure_pa/1000;
+    itemperature.data = data.temp_c;
 
     //ROS_INFO("epressure:%f\n", epressure.data);
     //ROS_INFO("etemperature:%f\n", etemperature.data);
@@ -135,9 +137,9 @@ int main(int argc, char** argv) {
 
     //publishes all data
     epressure_pub.publish(epressure);
-    etemperature_pub.publish(epressure);
+    etemperature_pub.publish(etemperature);
     ipressure_pub.publish(ipressure);
-    itemperature_pub.publish(ipressure);
+    itemperature_pub.publish(itemperature);
 
     //saves recent bmp data readings
     data_last = data;

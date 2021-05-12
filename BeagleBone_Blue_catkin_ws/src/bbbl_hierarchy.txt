@@ -8,8 +8,14 @@ BBBl ROS hierarchy
 			> MAUV_brain
 	> /Control
 		> /include
-		> /src
-			> readme_control.txt
+		> /src	
+			> readme_control.txt 
+	
+			> MAUV_Heartbeat
+			> PWM Outs (and VBS button)
+			> DTT
+			> VBS
+			> Battery
 			> 0_ChangeMode
 			> 1H_Heading
 			> 2H_LongTurn_FromAngle
@@ -22,26 +28,13 @@ BBBl ROS hierarchy
 			> 3V_Drift
 			> 4V_Hover
 			> 5V_FollowPath
-	> /drivers
-		> /include
-		> /src
-			> dtt
-			> vbs
-			> moving_mass
-			> leaksensors
-			> mauv_heartbeat
-			> pwm_outs
 	> /Data
 		> /include
 		> /src
 			> readme_sensors.txt
-			> Bar30 (class)
 			> VISensor_1.1
 			> PTSensors
 			> imu_mpu
 			> filtering
-			> recording
-			> rc_calibrate_mag
-			> rc_calibrate_gyro
-			> rc_calibrate_accel
+			> bagging
 	> CMakeList.txt

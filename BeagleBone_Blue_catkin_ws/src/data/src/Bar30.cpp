@@ -213,16 +213,16 @@ void MS5837::readTestCase() {
 void MS5837::calculate() {
 	// Given C1-C6 and D1, D2, calculated TEMP and P
 	// Do conversion first and then second order temp compensation
-
+	
 	int32_t dT = 0;
 	int64_t SENS = 0;
 	int64_t OFF = 0;
 	int32_t SENSi = 0;
-	int32_t OFFi = 0;
-	int32_t Ti = 0;
+	int32_t OFFi = 0;  
+	int32_t Ti = 0;    
 	int64_t OFF2 = 0;
 	int64_t SENS2 = 0;
-
+	
 	// Terms called
 	dT = D2-uint32_t(C[5])*256l;
 	if ( _model == MS5837_02BA ) {
@@ -234,10 +234,10 @@ void MS5837::calculate() {
 		OFF = int64_t(C[2])*65536l+(int64_t(C[4])*dT)/128l;
 		P = (D1*SENS/(2097152l)-OFF)/(8192l);
 	}
-
+	
 	// Temp conversion
 	TEMP = 2000l+int64_t(dT)*C[6]/8388608LL;
-
+	
 	//Second order compensation
 	if ( _model == MS5837_02BA ) {
 		if((TEMP/100)<20){         //Low temp
@@ -261,14 +261,14 @@ void MS5837::calculate() {
 			SENSi = 0;
 		}
 	}
-
+	
 	OFF2 = OFF-OFFi;           //Calculate pressure and temp second order
 	SENS2 = SENS-SENSi;
-
+	
 	TEMP = (TEMP-Ti);
-
+	
 	if ( _model == MS5837_02BA ) {
-		P = (((D1*SENS2)/2097152l-OFF2)/32768l);
+		P = (((D1*SENS2)/2097152l-OFF2)/32768l); 
 	} else {
 		P = (((D1*SENS2)/2097152l-OFF2)/8192l);
 	}

@@ -41,20 +41,20 @@ public:
 	static constexpr float mbar = 1.0f;
 	static const uint8_t MS5837_30BA = 0;
 	static const uint8_t MS5837_02BA = 1;
-
+	
 	MS5837();
 
 	void init();
-
+	
 	/** Set model of MS5837 sensor. Valid options are MS5837::MS5837_30BA (default)
 	 * and MS5837::MS5837_02BA.
 	 */
 	void setModel(uint8_t model);
-
+	
 	/** Provide the density of the working fluid in kg/m^3. Default is for
 	 * seawater. Should be 997 for freshwater.
 	 */
-
+	 
 	void setFluidDensity(float density);
 
 	/** The read from I2C takes up for 40 ms, so use sparingly is possible.

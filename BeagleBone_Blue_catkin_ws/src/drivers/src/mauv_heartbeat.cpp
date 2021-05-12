@@ -55,7 +55,7 @@ int main(int argc, char **argv) {
     //starts at 0 beats
     heartbeat_pub.publish(beat);
 
-    //every milliseconds increments the number of beats
+    //every second increment the number of beats
     beat.data+=1;
 
     //passes to ros

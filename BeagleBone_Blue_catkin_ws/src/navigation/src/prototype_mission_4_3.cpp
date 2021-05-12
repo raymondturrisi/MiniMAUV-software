@@ -58,7 +58,7 @@ void beatCallback(const std_msgs::Float32::ConstPtr& msg) {
   beat = msg->data;
 }
 
-void leakingCallback(const std_msgs::Bool::ConstPtr& msg) {
+void leakingCallback(const std_msgs::Float32::ConstPtr& msg) {
   leaking = msg->data;
 }
 
@@ -110,7 +110,7 @@ int main(int argc, char **argv) {
     hfright_ang.data = 180;
     escleft.data = 1500;
     escright.data = 1500;
-    vbs_desired_dist.data = 50;
+    vbs_desired_dist.data = 80;
     mm_ang.data = 90;
 
     while((std::abs(vbs_desired_dist.data - vbs_cdist) > 5) && !leaking) {
@@ -130,7 +130,7 @@ int main(int argc, char **argv) {
     hfright_ang.data = 180;
     escleft.data = 1500;
     escright.data = 1500;
-    vbs_desired_dist.data = 50;
+    vbs_desired_dist.data = 80;
     mm_ang.data = 90;
 
     for(int i = 0; i < 10; i++) {
@@ -153,7 +153,7 @@ int main(int argc, char **argv) {
     hfright_ang.data = 180;
     escleft.data = 1620;
     escright.data = 1620;
-    vbs_desired_dist.data = 50;
+    vbs_desired_dist.data = 80;
     mm_ang.data = 90;
 
     for(int i = 0; i < 10; i++) {
@@ -176,7 +176,7 @@ int main(int argc, char **argv) {
     hfright_ang.data = 180;
     escleft.data = 1640;
     escright.data = 1640;
-    vbs_desired_dist.data = 50;
+    vbs_desired_dist.data = 80;
     mm_ang.data = 90;
 
     for(int i = 0; i < 10; i++) {

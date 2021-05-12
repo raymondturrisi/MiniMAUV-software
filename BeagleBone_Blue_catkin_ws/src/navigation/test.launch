@@ -1,0 +1,8 @@
+<launch>
+    <node
+        pkg="rosbag"
+        name="record"
+        type="record"
+        args="-O filename.bag -a"
+    />
+</launch>

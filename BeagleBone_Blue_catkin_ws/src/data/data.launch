@@ -1,5 +1,5 @@
 <launch>
-  ##Launches all the drivers
+  ##Launches all the sensors
   <node pkg = "data" type = "pt_sensors" name = "pt_sensors" />
   <node pkg = "data" type = "imu_mpu" name = "imu_mpu" />
   <node pkg = "data" type = "vi_sensors" name = "vi_sensors" />

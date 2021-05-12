@@ -138,7 +138,7 @@ int main(int argc, char **argv) {
     hfright_ang.data = 180;
     escleft.data = 1500;
     escright.data = 1500;
-    vbs_desired_dist.data = 50;
+    vbs_desired_dist.data = 80;
     mm_ang.data = 90;
 
     while((std::abs(vbs_desired_dist.data - vbs_cdist) > 5) && !leaking) {
@@ -158,7 +158,7 @@ int main(int argc, char **argv) {
     hfright_ang.data = 180;
     escleft.data = 1600;
     escright.data = 1600;
-    vbs_desired_dist.data = 50;
+    vbs_desired_dist.data = 80;
     mm_ang.data = 90;
 
     for(int i = 0; i < 10; i++) {
@@ -215,8 +215,8 @@ int main(int argc, char **argv) {
       ros::Duration(0.5).sleep();
     }
     //5) when transitioned, canter foils at opposite 45 degrees and slowly thrust to spiral dive down for 10 seconds >> for ~~
-    hfleft_ang.data = 135;
-    hfright_ang.data = 225;
+    hfleft_ang.data = 75;
+    hfright_ang.data = 285;
     escleft.data = 1550;
     escright.data = 1550;
     vbs_desired_dist.data = 10;

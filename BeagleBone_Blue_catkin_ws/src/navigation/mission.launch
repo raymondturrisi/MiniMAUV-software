@@ -1,10 +1,10 @@
 <launch>
   ##Launches all the drivers
-
+  
   <node pkg = "navigation" type = "prototype_mission_6" name = "pm6"/>
-
-  <arg name = "fname" default = "/home/beagle/bags/pm_6_test1_11-21-2020.bag" />
-
+  
+  <arg name = "fname" default = "/home/beagle/bags/pm_6_test1_still_4-30-2021.bag" />
+  
   <node pkg = "rosbag" type = "record" name = "recording" args = "-O $(arg fname) --all"/>
   
 </launch>
